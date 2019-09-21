@@ -4,33 +4,33 @@
   <br/><br/>
   <p><%= @place.description %></p>
 
-<% if @place.latitude.present? && @place.longitude.present? %>
-  <script>
+  <% if @place.latitude.present? && @place.longitude.present? %>
+    <script>
 
-    function initMap() {
-      var myLatLng = {lat: <%= @place.latitude %>, lng: <%= @place.longitude %>};
+      function initMap() {
+        var myLatLng = {lat: <%= @place.latitude %>, lng: <%= @place.longitude %>};
 
-      var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 12,
-        center: myLatLng
-      });
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: myLatLng
+        });
 
-      var marker = new google.maps.Marker({
-        position: myLatLng,
-        map: map,
-        title: 'Hello World!'
-      });
-    }
-  </script>
+        var marker = new google.maps.Marker({
+          position: myLatLng,
+          map: map,
+          title: 'Hello World!'
+        });
+      }
+    </script>
 
-  <script async defer
-  src="https://maps.googleapis.com/maps/api/js?key=<%=ENV['GEOCODER_API_KEY']%>&callback=initMap">
-  </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=<%=ENV['GEOCODER_API_KEY']%>&callback=initMap">
+    </script>
 
-  <div id="map"></div>
-<% end %>
+    <div id="map"></div>
+  <% end %>
 
-<br />
+  <br />
 
   <div class="float-right">
     <% if current_user && current_user == @place.user %>
@@ -39,3 +39,10 @@
     <% end %>
   </div>
 </div>
+
+<div class="clear"></div>
+<%= simple_form_for @comment, url: '#' do |f| %>
+  <%= f.input :message %>
+  <%= f.input :rating %>
+  <%= f.submit "Add a Comment", class: 'btn btn-primary' %>
+<% end %>
